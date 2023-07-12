@@ -1,3 +1,4 @@
 torch
 torchvision
 numpy
+opencv-contrib-python
