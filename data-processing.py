@@ -107,13 +107,18 @@ def load_data(folder):
               f_path = os.path.join(i_path, img)
               image = PIL.Image.open(f_path).convert("RGB")
 
-            aspect_ratio = image.width / image.height
-            new_width = 256
-            new_height = int(new_width / aspect_ratio)
-            new_size = (new_width, new_height)
+              aspect_ratio = image.width / image.height
 
-            resized_image = PIL.ImageOps.pad(image, new_size, color="black")
-            hsv_image = resized_image.convert("HSV")
+              if aspect_ratio < 1:
+                  new_width = 256
+                  new_height = int(new_width / aspect_ratio)
+              else:
+                  new_height = 256
+                  new_width = int(new_height * aspect_ratio)
+
+              resized_image = image.resize((new_width, new_height))
+              padded_image = PIL.ImageOps.pad(resized_image, (256, 256), color="black")
+              hsv_image = padded_image.convert("HSV")
               
             data.append((transform(hsv_image), torch.tensor(label)))
 
