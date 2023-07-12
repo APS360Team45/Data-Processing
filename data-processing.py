@@ -129,7 +129,7 @@ def load_data(folder):
 ######################################################
 ###### Getting train loaders for training ############
 
-def load_training_data(images, train_p=.8, val_p = .1, batch_size=64): # This function takes in the raw shuffled data and outputs object of type dataloader with specified batches
+def load_training_data(images, train_p=.8, val_p = .1, batch_size=64, return_data=True): # This function takes in the raw shuffled data and outputs object of type dataloader with specified batches
 
   total_size = len(images)
 
@@ -148,8 +148,19 @@ def load_training_data(images, train_p=.8, val_p = .1, batch_size=64): # This fu
   if len(test) > 0: testloader = DataLoader(test, batch_size=batch_size, shuffle=True, num_workers=1)
   else: testloader = 0
 
-  return trainloader, valloader, testloader
+  if return_data == False:
+    return trainloader, valloader, testloader
+  else:
+    return train, val, test
 
 data = load_data(file_path)
 
-train_loader, val_loader, test_loader = load_training_data(data)
+train, val, test = load_training_data(data)
+
+print(f"TRAIN Dataset Length: {len(train)}")
+print(f"VAL Dataset Length: {len(val)}")
+print(f"TEST Dataset Length: {len(test)}")
+
+torch.save(train, 'train_dataset.pth')
+torch.save(val, 'val_dataset.pth')
+torch.save(test, 'test_dataset.pth')
