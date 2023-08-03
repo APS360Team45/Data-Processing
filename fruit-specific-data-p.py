@@ -34,10 +34,10 @@ def load_data(folder, set_fruit):
 
         original_size = len(img_list)
 
-        if original_size > 1000:
-          img_list = img_list[:1000]
+        if original_size > 800:
+          img_list = img_list[:800]
 
-        while len(img_list) < 1000:
+        while len(img_list) < 800:
           mod = random.randint(0, 5)
           img_list.append(mod)
 
@@ -120,42 +120,9 @@ def load_data(folder, set_fruit):
 
   return data
 
-######################################################
-###### Getting train loaders for training ############
-
-def load_training_data(images, train_p=.8, val_p = .1, batch_size=64, return_data=True): # This function takes in the raw shuffled data and outputs object of type dataloader with specified batches
-
-  total_size = len(images)
-
-  train_size = int(train_p * total_size)
-  val_size = int(val_p * total_size + train_size)
-
-  # splits data into training, validation, and testing datasets
-  train = images[:train_size]
-  val = images[train_size:val_size]
-  test = images[val_size:]
-
-  # creates and returns a dataloader from each of the previously split datasets
-  trainloader = DataLoader(train, batch_size=batch_size, shuffle=True, num_workers=1)
-  if len(val) > 0: valloader = DataLoader(val, batch_size=batch_size, shuffle=True, num_workers=1)
-  else: valloader = 0
-  if len(test) > 0: testloader = DataLoader(test, batch_size=batch_size, shuffle=True, num_workers=1)
-  else: testloader = 0
-
-  if return_data == False:
-    return trainloader, valloader, testloader
-  else:
-    return train, val, test
-
 fruit = "Banana"
 data = load_data(file_path, fruit)
 
-train, val, test = load_training_data(data)
+print(f"Dataset Length: {len(data)}")
 
-print(f"TRAIN Dataset Length: {len(train)}")
-print(f"VAL Dataset Length: {len(val)}")
-print(f"TEST Dataset Length: {len(test)}")
-
-torch.save(train, f'train_dataset_{fruit}.pth')
-torch.save(val, f'val_dataset_{fruit}.pth')
-torch.save(test, f'test_dataset_{fruit}.pth')
+torch.save(data, f'test_dataset_{fruit}.pth')
