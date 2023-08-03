@@ -7,7 +7,7 @@ import torchvision.transforms as transforms
 import numpy as np
 import random
 
-file_path = "test-fruit-dataset"
+file_path = "avid_picked_fruits"
 
 def load_data(folder): 
 
@@ -62,4 +62,4 @@ def load_data(folder):
 
 test = load_data(file_path)
 
-torch.save(test, 'test_dataset_extra.pth')
+torch.save(test, 'test_dataset_extra(avid).pth')
