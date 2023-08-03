@@ -6,7 +6,7 @@ import torchvision.transforms as transforms
 import numpy as np
 import random
 
-file_path = "Fruits"
+file_path = "all_hand_picked_fruits"
 
 def load_data(folder, set_fruit): 
 
@@ -34,10 +34,10 @@ def load_data(folder, set_fruit):
 
         original_size = len(img_list)
 
-        if original_size > 800:
-          img_list = img_list[:800]
+        if original_size > 20:
+          img_list = img_list[:20]
 
-        while len(img_list) < 800:
+        while len(img_list) < 20:
           mod = random.randint(0, 5)
           img_list.append(mod)
 
